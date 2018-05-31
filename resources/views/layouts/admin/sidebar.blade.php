@@ -9,11 +9,11 @@
                             </li>
                             @if(auth()->check() and auth()->user()->id == 1)
                             <li class="has_sub">
-                                <a href="javascript:void(0);" class="waves-effect"><i class="zmdi zmdi-assignment-account"></i> <span> User Management </span> <span class="menu-arrow"></span></a>
+                                <a href="javascript:void(0);" class="waves-effect"><i class="zmdi zmdi-assignment-account"></i> <span> Driver Management </span> <span class="menu-arrow"></span></a>
                                 <ul class="list-unstyled">
-                                    <li><a href="{{ route('admin.user.index') }}">User List</a></li>
+                                    <li><a href="{{ route('admin.user.index') }}">Driver List</a></li>
                                     <li><a href="{{ route('admin.invite.index') }}">Invite</a></li>
-                
+                                    <li><a href="{{ route('admin.user.changepassword.form') }}">Change Password</a></li>
                                 </ul>
                             </li>
                             @endif 

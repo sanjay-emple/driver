@@ -22,10 +22,6 @@ Route::get('/dashboard', 'HomeController@index')->name('dashboard');
 
 Route::get('/test', function () {
 
-	$ramdom_string = random_string(6);
-    $test =safe_b64encode($ramdom_string);
-    $test1 =safe_b64decode($test);
-   
 });
 
 Route::get('/flash', function () {
@@ -41,16 +37,20 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
+	Route::group(['middleware'=>'admin'],function(){
 
+	Route::get('/users', 'UserController@index')->name('admin.user.index');
+	Route::get('/user/{id}/activate', 'UserController@activate_user')->name('admin.user.activate');
+	Route::get('/ajax/getuser', 'UserController@ajax_get_users')->name('ajax.get.users');
 
-Route::group(['middleware'=>'admin'],function(){
+	Route::get('/invite', 'InviteController@index')->name('admin.invite.index');
+	Route::post('/invite', 'InviteController@store')->name('admin.invite.store');
 
-Route::get('/users', 'UserController@index')->name('admin.user.index');
-Route::get('/user/{id}/activate', 'UserController@activate_user')->name('admin.user.activate');
-Route::get('/ajax/getuser', 'UserController@ajax_get_users')->name('ajax.get.users');
+	Route::get('/user/{id}/edit', 'UserController@change_profile')->name('admin.user.edit');
+	Route::post('/user', 'UserController@store_profile')->name('admin.user.store');
 
-Route::get('/invite', 'InviteController@index')->name('admin.invite.index');
-Route::post('/invite', 'InviteController@store')->name('admin.invite.store');
+	Route::get('/changepassword', 'UserController@change_password_form')->name('admin.user.changepassword.form');
+	Route::post('/changepassword', 'UserController@change_password')->name('admin.user.changepassword');
 
 });
 

@@ -94,14 +94,12 @@ class RegisterController extends Controller
 
         $url = route('register').'?ref='.$request->ref_code;
         return redirect($url)
-            ->withSuccess('Your request is send to admin for activate account.');
+            ->withSuccess('Your request is send to admin for approval.');
     }
 
     public function showRegistrationForm(Request $res)
     {
        
-        
-
         $ref_code = $res->ref;
 
         if($ref_code == null or empty($ref_code))
@@ -118,7 +116,7 @@ class RegisterController extends Controller
 
         if($user_m == null)
         {
-            session()->flash('error','Invail referral code');
+            session()->flash('error','Invalid referral code');
             $url = route('login');
             return redirect($url);
         }

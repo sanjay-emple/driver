@@ -46,9 +46,8 @@
 
                 <!-- LOGO -->
                 <div class="topbar-left">
-                    <a href="#" class="logo">
-                        <i class="zmdi zmdi-group-work icon-c-logo"></i>
-                        <span>{{ config('app.name') }}</span></a>
+                    <a href="{{ url('/') }}" class="logo">
+                        <span><img style="width:90%;" src="{{ url('public/assets/images/logo3.jpg') }}"></span></a>
                 </div>
 
                @include('layouts.admin.nav')

@@ -8,8 +8,7 @@
                 <div class="card-box mb-0">
                     <div class="text-center m-t-20">
                         <a href="#" class="logo">
-                            <i class="zmdi zmdi-group-work icon-c-logo"></i>
-                            <span>{{ config('app.name') }}</span>
+                            <span><img style="width:50%;" src="{{ url('public/assets/images/logo3.jpg') }}"></span>
                         </a>
                     </div>
                     <div class="m-t-10 p-20">

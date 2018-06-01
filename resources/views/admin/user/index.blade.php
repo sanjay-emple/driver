@@ -9,7 +9,7 @@
                             <div class="col-xl-12">
                                 <div class="page-title-box">
                                     <h4 class="page-title float-left">Driver Lists</h4>
-                                    <a class="float-right btn btn-primary" href="{{ route('admin.user.index') }}" >Back</a>
+                              
                                     <div class="clearfix"></div>
                                 </div>
                             </div>

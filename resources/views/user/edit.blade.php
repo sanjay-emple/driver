@@ -28,10 +28,9 @@
                             </div> 
                         </div>
  -->
-                        <form method="post" action="{{ route('admin.user.store') }}">
+                        <form method="post" action="{{ route('user.store') }}">
                            {{ csrf_field() }}
                            
-                           <input type="hidden" name="user_id" value="{{ $user->id }}">
                             <div class="row">
                                <div class="col-12">
                                    <div class="card-box">
@@ -84,17 +83,7 @@
                                        </div>
 
                                        <div class="form-group row">
-                                           <label for="status"  class="col-2 col-form-label">Status</label>
-                                           <div class="col-10">
-                                               <select class="form-control" name="status" id="status" required>
-                                                   <option value="1" {{ $user->active == 1 ? 'selected=selected' : '' }}>Active</option>
-                                                   <option value="0" {{ $user->active == 0 ? 'selected=selected' : '' }}>Inactive</option>
-                                               </select>
-                                           </div>
-                                       </div>
-
-                                       <div class="form-group row">
-                                           <label for="driver_status" class="col-2 col-form-label">Driver Status</label>
+                                           <label for="driver_status" class="col-2 col-form-label">Status</label>
                                            <div class="col-10">
                                                <select class="form-control" name="driver_status"  id="driver_status" required>
                                                    <option value="1" {{ $user->driver_status == 1 ? 'selected=selected' : '' }}>Active</option>

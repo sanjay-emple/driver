@@ -21,6 +21,7 @@
 
         <!-- Modernizr js -->
     <script src="{{ url('public/assets/js/modernizr.min.js')}}"></script>
+
         @yield('link')
 
         @yield('header_script')
@@ -29,6 +30,8 @@
     <body>
   
      @yield('content')
+
+
 
              <!-- jQuery  -->
         <script src="{{ url('public/assets/js/jquery.min.js') }}"></script>
@@ -42,6 +45,16 @@
         <script src="{{ url('public/assets/js/jquery.scrollTo.min.js') }}"></script>
         <script src="{{ url('public/assets/js/jquery.slimscroll.js') }}"></script>
         <script src="{{ url('public/assets/plugins/switchery/switchery.min.js') }}"></script>
+
+        <script type="text/javascript">
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        var base_url = '{{ url("/") }}';
+
+        </script> 
 
         <!-- App js -->
         <script src="{{ url('public/assets/js/jquery.core.js"></script>

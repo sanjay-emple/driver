@@ -5,10 +5,11 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\User;
 use Yajra\DataTables\Facades\DataTables;
+use File;
 
 class UserController extends Controller
 {
-	public function __construct()
+	  public function __construct()
     {
         $this->middleware('auth');
     }
@@ -164,4 +165,33 @@ class UserController extends Controller
 
        return redirect()->back();
     }
+
+    /*public function user_image_store(Request $res){
+      $imagedata = $res->image;
+      $imagedata = str_replace('image=data:image/png;base64', '', $imagedata);
+      $imagedata = str_replace(' ', '+', $imagedata);
+      $encode_img = base64_decode($imagedata); 
+      $userid = auth()->user()->id;
+      $upload_path = public_path().'/assets/uploads/userimages/';
+      if (!is_dir($upload_path. $userid)) {
+        File::makeDirectory($upload_path . $userid, 0777,true);
+      }
+      if (!is_dir($upload_path . $userid . '/profileimage')) {
+        File::makeDirectory($upload_path . $userid . '/profileimage', 0777,true);
+      } else {
+        $dir = $upload_path . $userid . '/profileimage';
+        $handle = opendir($dir);
+        while (($file = readdir($handle)) !== false) {
+          @unlink($dir . '/' . $file);
+        }
+        closedir($handle);
+      }
+      $filename = time() . ".png";
+      $dest = $upload_path . $userid. "/profileimage/";
+      $dest = $dest . $filename;
+      $success = file_put_contents($dest, $encode_img);
+      $obj_profile = User::where('id',$userid)->first();
+      $obj_profile->profile_img = $filename;
+      $obj_profile->save();
+  }*/
 }

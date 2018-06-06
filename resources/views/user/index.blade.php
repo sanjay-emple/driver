@@ -14,15 +14,13 @@
 							</div>
 						</div>
                         <!-- end row -->
-
-
+                        
                         <div class="row">
                             <div class="col-xs-12 col-md-6 col-lg-6 col-xl-3">
                                 <div class="card-box tilebox-one">
                                     <i class="icon-layers float-right text-muted"></i>
-                                    <h6 class="text-muted text-uppercase m-b-20"> Total Drivers</h6>
+                                    <h6 class="text-muted text-uppercase m-b-20"></h6>
                                     <h2 class="m-b-20" data-plugin="counterup">{{ $user_count }}</h2>
-
                                 </div>
                             </div>
                         </div>

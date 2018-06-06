@@ -21,7 +21,7 @@ Route::get('/logout', function () {
 Route::get('/dashboard', 'HomeController@index')->name('dashboard');
 
 Route::get('/test', function () {
-
+	echo $ramdom_string = random_string(8);
 });
 
 Route::get('/flash', function () {
@@ -32,7 +32,18 @@ Route::get('/flash', function () {
 Route::get('/admin', function () {
     return view('layouts.admin.app');
 });
+
 Auth::routes();
+
+
+Route::get('/user/changepassword', 'DriverController@change_password_form')->name('user.changepassword.form');
+Route::post('/user/changepassword', 'DriverController@change_password')->name('user.changepassword');
+
+Route::get('changeprofile', 'DriverController@change_profile')->name('user.edit');
+Route::post('changeprofile', 'DriverController@store_profile')->name('user.store');
+
+Route::get('user/invite', 'DriverController@invite_form')->name('invite.inviteform');
+Route::post('user/invite', 'DriverController@invite')->name('invite.invitestore');
 
 
 Route::get('/home', 'HomeController@index')->name('home');
@@ -51,6 +62,10 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 	Route::get('/changepassword', 'UserController@change_password_form')->name('admin.user.changepassword.form');
 	Route::post('/changepassword', 'UserController@change_password')->name('admin.user.changepassword');
+
+	//Route::post('/userimageupload', 'UserController@user_image_store')->name('admin.user.useriamgestore');
+
+	
 
 });
 

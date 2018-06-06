@@ -101,6 +101,16 @@
         <script src="{{ url('public/assets/js/jquery.slimscroll.js') }}"></script>
         <script src="{{ url('public/assets/plugins/switchery/switchery.min.js') }}"></script>
 
+        <script type="text/javascript">
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        var base_url = '{{ url("/") }}';
+
+        </script> 
+
         @yield('footer_script')
 
         <!-- App js -->

@@ -13,21 +13,7 @@
                                     <h5 class="text-overflow"><small>Hi ! {{ auth()->user()->fullname()}} </small> </h5>
                                 </div>
 
-                                <!-- item-->
-                                <a href="javascript:void(0);" class="dropdown-item notify-item">
-                                    <i class="zmdi zmdi-account-circle"></i> <span>Profile</span>
-                                </a>
-
-                                <!-- item-->
-                                <a href="javascript:void(0);" class="dropdown-item notify-item">
-                                    <i class="zmdi zmdi-settings"></i> <span>Settings</span>
-                                </a>
-
-                                <!-- item-->
-                                <a href="javascript:void(0);" class="dropdown-item notify-item">
-                                    <i class="zmdi zmdi-lock-open"></i> <span>Lock Screen</span>
-                                </a>
-
+                               
                                 <!-- item-->
                                 <a href="{{ route('logout') }}" class="dropdown-item notify-item">
                                     <i class="zmdi zmdi-power"></i> <span>Logout</span> 

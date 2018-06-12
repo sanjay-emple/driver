@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\User;
+use App\Tree;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
@@ -70,7 +71,7 @@ class RegisterController extends Controller
     protected function create(array $data)
     {
 
-       // $ramdom_string = random_string(8);
+        $ramdom_string = random_string(8);
 
         $user  = User::create([
             'first_name' => $data['first_name'],
@@ -83,15 +84,45 @@ class RegisterController extends Controller
             'password' => bcrypt($data['password']),
             'url' => $ramdom_string
         ]);
-/*
+
         $ref_code = safe_b64decode($data['ref_code']);
 
         $ref_user = User::where('url',$ref_code)->first();
 
-        if($ref_user == null)
+        if($ref_user != null)
         {
 
-        }*/
+            if($ref_user->id == 1)
+            {
+                Tree::create([
+                   'user_id' => $user->id,
+                   'parent_id' => 0,
+                   'level' => null
+                ]);
+            }
+            else
+            {
+                $tree_m = Tree::where('parent_id',$ref_user->id)->orderBy('id','desc')->first();
+
+                if($tree_m == null)
+                {
+                   $pos = 1;
+                }
+                else
+                {
+                   $level = $tree_m['level'];
+
+                   $pos = $level == 1 ? 2 : 1;
+                }
+
+                Tree::create([
+                   'user_id' => $user->id,
+                   'parent_id' => $ref_user->id,
+                   'level' => $pos
+                ]);
+            }
+                
+        }
 
         return $user;
 

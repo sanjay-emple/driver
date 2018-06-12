@@ -30,6 +30,8 @@
         <!-- App CSS -->
         <link href="{{ url('public/assets/css/style.css') }}" rel="stylesheet" type="text/css" />
 
+        @yield('link')
+
         <!-- Modernizr js -->
         <script src="{{ url('public/assets/js/modernizr.min.js') }}"></script>
 
@@ -114,7 +116,7 @@
         @yield('footer_script')
 
         <!-- App js -->
-        <script src="{{ url('public/assets/js/jquery.core.js') }}"></script>
+       <!--  <script src="{{ url('public/assets/js/jquery.core.js') }}"></script> -->
         <script src="{{ url('public/assets/js/jquery.app.js') }}"></script>
 
         

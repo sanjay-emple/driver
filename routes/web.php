@@ -20,8 +20,71 @@ Route::get('/logout', function () {
 
 Route::get('/dashboard', 'HomeController@index')->name('dashboard');
 
+
+Route::get('/test1', function () {
+  $select = \App\Tree::select('id','user_id','parent_id','level')->get()->toArray();
+
+  $new_arr = buildTree($select,1);
+
+  $chunk = array_chunk($new_arr,2);
+
+  dd($chunk);
+
+  foreach ($chunk as $key => $c) {
+    $new_arr = buildTree($select,auth()->user()->id);
+    dump($new_arr);
+  }
+
+  //dump($chunk);
+
+  //return $select;
+});
+
+
 Route::get('/test', function () {
-	echo $ramdom_string = random_string(8);
+
+	/*//\App\Tree::truncate();
+
+	$tree_m = App\Tree::where('parent_id',2)->orderBy('id','desc')->first();
+
+	if($tree_m == null)
+	{
+		$pos = 1;
+	}
+	else
+	{
+		$level = $tree_m['level'];
+
+		$pos = $level == 1 ? 2 : 1;
+	}
+
+	App\Tree::create([
+		'user_id' => 8,
+		'parent_id' => 2,
+		'level' => $pos
+	]);
+*/
+
+
+	$select = \App\Tree::select('id','user_id','parent_id','level')->get()->toArray();
+
+	dump($select);
+
+	$new_arr = buildTree($select,auth()->user()->id);
+
+	/*$new_arr = array_map(function($arr){
+		$arrar = [];
+
+		$arrar['user_id'] = $arr['user_id'];
+		return $arrar;
+
+	}, $new_arr);*/
+
+	echo json_encode($new_arr);
+
+
+
+	//echo $ramdom_string = random_string(8);
 });
 
 Route::get('/flash', function () {

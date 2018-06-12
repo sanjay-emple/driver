@@ -27,4 +27,56 @@ function random_string($length) {
     return $key;
 }
 
+function buildTree(array $elements, $parentId = 0) {
+        $branch = array();
+
+        foreach ($elements as $element) {
+            if ($element['parent_id'] == $parentId) {
+                $children = buildTree($elements, $element['user_id']);
+                if ($children) {
+                    $element['children'] = $children;
+                }
+                $branch[] = $element;
+            }
+        }
+
+        return $branch;
+}
+
+function fullname($user_id)
+{
+    $obj = \App\User::where('id',$user_id)->first();
+
+    if($obj)
+    {
+        return ucfirst($obj->first_name .' '.$obj->last_name);
+    }
+    else
+    {
+        return 'User not found';
+    }
+}
+
+
+function parent($user_id)
+{
+    $obj = \App\Tree::where('user_id',$user_id)->first();
+
+    if($obj)
+    {
+        if($obj->parent_id == 0)
+        {
+          return 'Root';
+        }
+        else
+        {
+            return fullname($obj->parent_id);
+        }
+    }
+    else
+    {
+        return 'User not found';
+    }
+}
+
 ?>

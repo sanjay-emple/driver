@@ -24,6 +24,7 @@ class InviteController extends Controller
     {
     	
     	$data = array();
+    	$obj_user = auth()->user();
 
     	if($res->has('user_csv'))
     	{
@@ -55,7 +56,8 @@ class InviteController extends Controller
 
 	    		  $user_data['name'] = $d[0];
 	    		  $user_data['email'] = $d[0];
-	    		  $user_data['url'] = route('register').'?ref='.safe_b64encode(auth()->user()->url);
+	    		  $user_data['invite_from'] = $obj_user->fullname();
+	    		  $user_data['url'] = route('register').'?ref='.safe_b64encode($obj_user->url);
 	    		  if($j==0)
 	    		  {
 	    		  	 $j++;
@@ -90,6 +92,7 @@ class InviteController extends Controller
 
 			  $user_data['name'] = $res->name;
     		  $user_data['email'] = $res->email;
+    		  $user_data['invite_from'] = $obj_user->fullname();	
     		  $user_data['url'] = route('register').'?ref='.safe_b64encode(auth()->user()->url);
 
     		  UserInvite::create([

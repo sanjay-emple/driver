@@ -18,6 +18,13 @@ Route::get('/logout', function () {
     return redirect()->route('home');
 });
 
+Route::get('/time',function(){
+
+	$user = App\User::find(2);
+	dump($user->created_at->addMinutes(120));
+});
+
+
 Route::get('/dashboard', 'HomeController@index')->name('dashboard');
 
 
@@ -38,6 +45,17 @@ Route::get('/test1', function () {
   //dump($chunk);
 
   //return $select;
+});
+
+Route::get('/random_num', function () {
+
+	$users = \App\User::get();
+	
+	foreach ($users as $key => $user) {
+		$driver_num = random_num(8);
+		$user->update(['driver_num'=>$driver_num]);
+	}
+
 });
 
 
@@ -107,6 +125,12 @@ Route::post('changeprofile', 'DriverController@store_profile')->name('user.store
 
 Route::get('user/invite', 'DriverController@invite_form')->name('invite.inviteform');
 Route::post('user/invite', 'DriverController@invite')->name('invite.invitestore');
+
+
+Route::group(['middleware'=>'auth'],function(){
+	Route::get('/profileimage', 'UserController@profile_image_form')->name('profile.image.form');
+	Route::post('/profileimage', 'UserController@profile_image_store')->name('profile.image.store');
+});
 
 
 Route::get('/home', 'HomeController@index')->name('home');

@@ -57,6 +57,20 @@ function fullname($user_id)
     }
 }
 
+function user_data($user_id)
+{
+    $user_array = [];
+
+    $obj = \App\User::where('id',$user_id)->first();
+
+    if($obj)
+    {
+        return $user_array = $obj->toArray();
+    }
+
+    return $user_array;
+}
+
 
 function parent($user_id)
 {
@@ -78,5 +92,26 @@ function parent($user_id)
         return 'User not found';
     }
 }
+
+function random_num($size) {
+    $alpha_key = '';
+    $keys = range('A', 'Z');
+
+    for ($i = 0; $i < 2; $i++) {
+        $alpha_key .= $keys[array_rand($keys)];
+    }
+
+    $length = $size - 2;
+
+    $key = '';
+    $keys = range(0, 9);
+
+    for ($i = 0; $i < $length; $i++) {
+        $key .= $keys[array_rand($keys)];
+    }
+
+    return $alpha_key . $key;
+}
+
 
 ?>

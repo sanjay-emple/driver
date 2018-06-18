@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\User;
 use Yajra\DataTables\Facades\DataTables;
 use File;
+use Image;
 
 class UserController extends Controller
 {
@@ -23,11 +24,13 @@ class UserController extends Controller
 
     public function ajax_get_users()
     {
-        $users = User::select(['id', 'name', 'first_name','last_name', 'email', 'telephone','driver_status','active','created_at'])->where('id','<>',1)->orderBy('id','desc');
+        $users = User::select(['id', 'name', 'driver_num', 'first_name','last_name', 'email', 'telephone','driver_status','active','created_at'])->where('id','<>',1)->orderBy('id','desc');
         return Datatables::of($users)
         ->addIndexColumn()
          ->editColumn('name', function ($user) {
-                return ucfirst($user->first_name.' '.$user->last_name);
+                $name = ucfirst($user->first_name.' '.$user->last_name);
+                $url = route('dashboard').'?user_id='.$user->id;
+               return '<a href="'.$url.'">'.$name.'</a>';
             })
          ->editColumn('driver_status', function ($user) {
               $driver_status = $user->driver_status == 1 ? ['Active','primary'] : ['Inactive','warning'];  
@@ -54,7 +57,7 @@ class UserController extends Controller
                return $html;
             })
        
-        ->rawColumns(['driver_status','active','action'])
+        ->rawColumns(['name','active','action'])
         ->make();
     }
 
@@ -93,7 +96,8 @@ class UserController extends Controller
 
     public function store_profile(Request $res)
     {
-        $this->validate($res,[
+
+        $rules = [
             'first_name' => 'required|string|max:255',
             'last_name' => 'required|string|max:255',
             'city' => 'required|string|max:255',
@@ -103,7 +107,17 @@ class UserController extends Controller
             'email' => 'required|string|email|max:255|unique:users,email,'.$res->user_id,
             'status' => 'required',
             'driver_status' => 'required',
-        ]);
+        ];
+
+        if($res->has('photo'))
+        {
+           $rules = array_merge($rules,[
+              'photo' => 'required|mimes:jpeg,jpg,png' 
+           ]);
+        } 
+
+        
+        $this->validate($res,$rules);
 
 
         $user = User::find($res->user_id);
@@ -125,6 +139,26 @@ class UserController extends Controller
             'active' => $res->status,
             'driver_status' => $res->driver_status  
         ]);
+
+        if($res->has('photo'))
+        {
+
+            if($user->profile_img)
+            {
+              $profile_image_path = $path = public_path('uploads/profile_image/' .$user->profile_img);
+
+               File::delete($profile_image_path);
+            }
+  
+            $image = $res->file('photo');
+            $filename  = time() . '.' . $image->getClientOriginalExtension();
+            $path = public_path('uploads/profile_image/' . $filename);
+            Image::make($image->getRealPath())->resize(128, 128)->save($path);
+            $user->profile_img = $filename;
+            $user->save();
+        }
+
+
 
        session()->flash('success','Driver details updated successfully');
        return redirect()->back();
@@ -166,32 +200,43 @@ class UserController extends Controller
        return redirect()->back();
     }
 
-    /*public function user_image_store(Request $res){
-      $imagedata = $res->image;
-      $imagedata = str_replace('image=data:image/png;base64', '', $imagedata);
-      $imagedata = str_replace(' ', '+', $imagedata);
-      $encode_img = base64_decode($imagedata); 
-      $userid = auth()->user()->id;
-      $upload_path = public_path().'/assets/uploads/userimages/';
-      if (!is_dir($upload_path. $userid)) {
-        File::makeDirectory($upload_path . $userid, 0777,true);
-      }
-      if (!is_dir($upload_path . $userid . '/profileimage')) {
-        File::makeDirectory($upload_path . $userid . '/profileimage', 0777,true);
-      } else {
-        $dir = $upload_path . $userid . '/profileimage';
-        $handle = opendir($dir);
-        while (($file = readdir($handle)) !== false) {
-          @unlink($dir . '/' . $file);
-        }
-        closedir($handle);
-      }
-      $filename = time() . ".png";
-      $dest = $upload_path . $userid. "/profileimage/";
-      $dest = $dest . $filename;
-      $success = file_put_contents($dest, $encode_img);
-      $obj_profile = User::where('id',$userid)->first();
-      $obj_profile->profile_img = $filename;
-      $obj_profile->save();
-  }*/
+    public function profile_image_form()
+    {
+       $user = auth()->user();
+
+       $data['user'] = $user;
+
+       return view('comman.profile_img',$data);
+    }
+
+    public function profile_image_store(Request $res)
+    {
+
+        $this->validate($res,
+          [
+             'photo' => 'required|mimes:jpeg,jpg,png' 
+          ]
+        );
+
+        $user = auth()->user();
+
+        if($user->profile_img)
+            {
+              $profile_image_path = $path = public_path('uploads/profile_image/' .$user->profile_img);
+
+               File::delete($profile_image_path);
+            }
+  
+            $image = $res->file('photo');
+            $filename  = time() . '.' . $image->getClientOriginalExtension();
+            $path = public_path('uploads/profile_image/' . $filename);
+            Image::make($image->getRealPath())->resize(128, 128)->save($path);
+            $user->profile_img = $filename;
+            $user->save();
+
+        session()->flash('success','Profile image successfully.');
+
+        return redirect()->back();
+    }
+
 }

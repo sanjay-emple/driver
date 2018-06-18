@@ -26,9 +26,10 @@
                                         <tr>
                                             <th>Id</th>
                                             <th>Name</th>
+                                            <th>Driver Number</th>
                                             <th>Email</th>
                                             <th>Telephone Number</th>
-                                            <th>Driver status</th>
+                                          <!--   <th>Driver status</th> -->
                                             <th>Status</th>
                                             <th>Created at</th>
                                             <th>Actions</th>
@@ -61,9 +62,10 @@ $('#datatable').DataTable({
         columns: [
             {data: 'DT_Row_Index', orderable: false, searchable: false},
             {data: 'name', name: 'name'},
+            {data: 'driver_num', name: 'driver_num'},
             {data: 'email', name: 'email'},
             {data: 'telephone', name: 'telephone'},
-            {data: 'driver_status', name: 'driver_status'},
+            /*{data: 'driver_status', name: 'driver_status'},*/
             {data: 'active', name: 'active'},
             {data: 'created_at', name: 'created_at'},
             {data: 'action', name: 'action', orderable: false, searchable: false}

@@ -8,6 +8,8 @@ use Hash;
 use App\UserInvite;
 use App\Mail\InviteUser;
 use Mail;
+use File;
+use Image;
 
 class DriverController extends Controller
 {
@@ -30,7 +32,9 @@ class DriverController extends Controller
     {
 
     	$user_id = auth()->user()->id;
-        $this->validate($res,[
+      $auth_user = auth()->user();
+
+        $rules = [
             'first_name' => 'required|string|max:255',
             'last_name' => 'required|string|max:255',
             'city' => 'required|string|max:255',
@@ -39,9 +43,18 @@ class DriverController extends Controller
             'telephone' => 'required|min:3|max:20',
             'email' => 'required|string|email|max:255|unique:users,email,'.$user_id,
             'driver_status' => 'required',
-        ]);
+        ];
 
-        auth()->user()->update([
+        $this->validate($res,$rules);
+
+        if($res->has('photo'))
+        {
+           $rules = array_merge($rules,[
+              'photo' => 'required|mimes:jpeg,jpg,png' 
+           ]);
+        }
+
+        $auth_user->update([
             'first_name' => $res->first_name,
             'last_name' => $res->last_name,
             'city' => $res->city,
@@ -51,6 +64,27 @@ class DriverController extends Controller
             'telephone' => $res->telephone,
             'driver_status' => $res->driver_status  
         ]);
+
+        if($res->has('photo'))
+        {
+
+            if($auth_user->profile_img)
+            {
+              $profile_image_path = $path = public_path('uploads/profile_image/' .$auth_user->profile_img);
+
+               File::delete($profile_image_path);
+            }
+  
+            $image = $res->file('photo');
+            $filename  = time() . '.' . $image->getClientOriginalExtension();
+            $path = public_path('uploads/profile_image/' . $filename);
+            Image::make($image->getRealPath())->resize(128, 128)->save($path);
+
+            $auth_user->update([
+              'profile_img' => $filename
+            ]);
+
+        }
 
        session()->flash('success','Profile details updated successfully');
        return redirect()->back();
@@ -93,15 +127,17 @@ class DriverController extends Controller
     {
 
     	$data = array();
+        $obj_user = auth()->user();
 
-		$this->validate($res,[
-		'name' => 'required',
-		'email' => 'required|email',
-		]);
+    		$this->validate($res,[
+    		'name' => 'required',
+    		'email' => 'required|email',
+    		]);
 
 		  $user_data['name'] = $res->name;
-		  $user_data['email'] = $res->email;
-		  $user_data['url'] = route('register').'?ref='.safe_b64encode(auth()->user()->url);
+          $user_data['email'] = $res->email;
+		  $user_data['invite_from'] = $obj_user->fullname();
+		  $user_data['url'] = route('register').'?ref='.safe_b64encode($obj_user->url);
 
 		  UserInvite::create([
 			  	'name' => $res->name,

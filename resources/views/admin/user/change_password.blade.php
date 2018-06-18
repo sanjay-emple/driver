@@ -30,7 +30,7 @@
                                                <select name="user" id="user" class="form-control">
                                                  <option value="">Select Driver</option>
                                                  @foreach($users as $user)
-                                                  <option value="{{ $user->id }}"> {{ $user->first_name . ' '.$user->last_name }} </option>
+                                                  <option value="{{ $user->id }}"> {{ ucfirst($user->first_name . ' '.$user->last_name).'  ('. $user->driver_num.')' }} </option>
                                                  @endforeach
                                                </select>
                                            </div>

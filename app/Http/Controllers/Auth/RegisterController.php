@@ -72,6 +72,7 @@ class RegisterController extends Controller
     {
 
         $ramdom_string = random_string(8);
+        $driver_num = random_num(8);
 
         $user  = User::create([
             'first_name' => $data['first_name'],
@@ -82,8 +83,9 @@ class RegisterController extends Controller
             'telephone' => $data['telephone'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
-            'url' => $ramdom_string
-        ]);
+            'url' => $ramdom_string,
+            'driver_num' => $driver_num
+        ]); 
 
         $ref_code = safe_b64decode($data['ref_code']);
 

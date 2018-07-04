@@ -61,48 +61,11 @@ Route::get('/random_num', function () {
 
 Route::get('/test', function () {
 
-	/*//\App\Tree::truncate();
+	$drivers = \App\Tree::get()->toArray();
+    $trees = test($drivers,6);
 
-	$tree_m = App\Tree::where('parent_id',2)->orderBy('id','desc')->first();
+    dump($trees);
 
-	if($tree_m == null)
-	{
-		$pos = 1;
-	}
-	else
-	{
-		$level = $tree_m['level'];
-
-		$pos = $level == 1 ? 2 : 1;
-	}
-
-	App\Tree::create([
-		'user_id' => 8,
-		'parent_id' => 2,
-		'level' => $pos
-	]);
-*/
-
-
-	$select = \App\Tree::select('id','user_id','parent_id','level')->get()->toArray();
-
-	dump($select);
-
-	$new_arr = buildTree($select,auth()->user()->id);
-
-	/*$new_arr = array_map(function($arr){
-		$arrar = [];
-
-		$arrar['user_id'] = $arr['user_id'];
-		return $arrar;
-
-	}, $new_arr);*/
-
-	echo json_encode($new_arr);
-
-
-
-	//echo $ramdom_string = random_string(8);
 });
 
 Route::get('/flash', function () {
@@ -149,6 +112,11 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 	Route::get('/changepassword', 'UserController@change_password_form')->name('admin.user.changepassword.form');
 	Route::post('/changepassword', 'UserController@change_password')->name('admin.user.changepassword');
+
+	Route::get('/changeplace', 'UserController@change_position_form')->name('admin.change.position.form');
+	Route::post('/changeplace', 'UserController@change_position_store')->name('admin.change.position.store');
+
+
 
 	//Route::post('/userimageupload', 'UserController@user_image_store')->name('admin.user.useriamgestore');
 

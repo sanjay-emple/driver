@@ -114,4 +114,27 @@ function random_num($size) {
 }
 
 
+function test(array $elements, $parentId = 0) {
+        $branch = array();
+
+        foreach ($elements as $element) {
+            if ($element['parent_id'] == $parentId) {
+                $children = buildTree($elements, $element['user_id']);
+                if ($children) {
+
+                   foreach ($children as  $v) {
+
+                      array_push($branch,$v['id']);                      
+                   }
+
+                }
+                //$branch[] = $element;
+            }
+        }
+
+    return $branch;
+}
+
+
+
 ?>

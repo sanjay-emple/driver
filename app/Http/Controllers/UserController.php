@@ -7,6 +7,7 @@ use App\User;
 use Yajra\DataTables\Facades\DataTables;
 use File;
 use Image;
+use App\Tree;
 
 class UserController extends Controller
 {
@@ -107,6 +108,7 @@ class UserController extends Controller
             'email' => 'required|string|email|max:255|unique:users,email,'.$res->user_id,
             'status' => 'required',
             'driver_status' => 'required',
+            'driver_number' => 'required|string|max:255|unique:users,driver_num,'.$res->user_id,
         ];
 
         if($res->has('photo'))
@@ -166,7 +168,7 @@ class UserController extends Controller
 
     public function change_password_form(Request $res)
     {
-        $users = user::orderby('name')->get();
+        $users = user::orderby('driver_num')->get();
         $data = [];
         $data['users'] = $users;
 
@@ -238,5 +240,26 @@ class UserController extends Controller
 
         return redirect()->back();
     }
+
+    public function change_position_form(Request $res)
+    {
+        $users = User::join('tree','users.id','tree.user_id')->select('users.*','tree.id as tree_id','tree.parent_id')->get();
+        $data = [];
+        $data['users'] = $users;
+
+        //dd($users);
+
+        return view('admin.tree.change_pos',$data);
+    }
+
+    public function change_position_store(Request $res)
+    {
+       dump($res->from);
+       $tree = Tree::where('parent_id','2')->get()->toArray();
+
+       dd($tree);
+    }
+
+
 
 }

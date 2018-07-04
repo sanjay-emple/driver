@@ -45,6 +45,8 @@ class HomeController extends Controller
 
        // dd($data['users']);
 
+        //dd($trees);
+
         if(auth()->user()->id == 1)
         {
 

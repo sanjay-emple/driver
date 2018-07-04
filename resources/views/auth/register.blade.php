@@ -1,4 +1,7 @@
 @extends('layouts.app')
+@section('link')
+<script src='https://www.google.com/recaptcha/api.js'></script>
+@endsection
 @section('content')
   <div class="account-pages"></div>
         <div class="clearfix"></div>
@@ -81,6 +84,8 @@
                                     </div>
                                 </div>
                             </div> -->
+
+                            {!! app('captcha')->display() !!}
 
                             <div class="form-group row text-center m-t-10">
                                 <div class="col-12">

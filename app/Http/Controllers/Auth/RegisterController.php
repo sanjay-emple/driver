@@ -146,9 +146,10 @@ class RegisterController extends Controller
     {
         $this->guard()->logout();
 
-        $url = route('register').'?ref='.$request->ref_code;
-        return redirect($url)
-            ->withSuccess('Your request is send to admin for approval.');
+        return redirect(route('thankyou'));
+        // $url = route('register').'?ref='.$request->ref_code;
+        // return redirect($url)
+        //     ->withSuccess('Your request is send to admin for approval.');
     }
 
     public function showRegistrationForm(Request $res)
@@ -177,5 +178,9 @@ class RegisterController extends Controller
         
         //uy72nxwr
         return view('auth.register',$data);
+    }
+
+    public function thankyou(){
+        return view('auth.thankyou');
     }
 }

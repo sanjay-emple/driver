@@ -89,6 +89,7 @@ Route::post('changeprofile', 'DriverController@store_profile')->name('user.store
 Route::get('user/invite', 'DriverController@invite_form')->name('invite.inviteform');
 Route::post('user/invite', 'DriverController@invite')->name('invite.invitestore');
 
+Route::get('/thankyou','Auth\RegisterController@thankyou')->name('thankyou');
 
 Route::group(['middleware'=>'auth'],function(){
 	Route::get('/profileimage', 'UserController@profile_image_form')->name('profile.image.form');

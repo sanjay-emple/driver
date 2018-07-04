@@ -87,7 +87,7 @@ class InviteController extends Controller
     	{
     		$this->validate($res,[
     		'name' => 'required',
-    		'email' => 'required|email',
+    		'email' => 'required|email|unique:users,email',
     		]);
 
 			  $user_data['name'] = $res->name;

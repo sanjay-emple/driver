@@ -118,7 +118,7 @@
         <!-- App js -->
        <!--  <script src="{{ url('public/assets/js/jquery.core.js') }}"></script> -->
         <script src="{{ url('public/assets/js/jquery.app.js') }}"></script>
-
+		<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
         
 
     </body>

@@ -125,7 +125,7 @@ class DriverController extends Controller
 
     public function invite(Request $res)
     {
-
+		
     	$data = array();
         $obj_user = auth()->user();
 
@@ -134,19 +134,19 @@ class DriverController extends Controller
     		'email' => 'required|email',
     		]);
 
-		  $user_data['name'] = $res->name;
-          $user_data['email'] = $res->email;
-		  $user_data['invite_from'] = $obj_user->fullname();
-		  $user_data['url'] = route('register').'?ref='.safe_b64encode($obj_user->url);
-
-		  UserInvite::create([
+			$user_data['name'] = $res->name;
+			$user_data['email'] = $res->email;
+			$user_data['invite_from'] = $obj_user->fullname();
+			$user_data['url'] = route('register').'?ref='.safe_b64encode($obj_user->url);
+			
+			UserInvite::create([
 			  	'name' => $res->name,
 			  	'email' => $res->email,
-		  ]);
-
-    	 Mail::to($res->email)->send(new InviteUser($user_data));
-    	 session()->flash('success','Successfully sent invitation.');
-    	 return redirect()->route('invite.inviteform');
+			]);	
+		
+			Mail::to($res->email)->send(new InviteUser($user_data));
+			session()->flash('success','Successfully sent invitation.');
+			return redirect()->route('invite.inviteform');
     }
 
 }

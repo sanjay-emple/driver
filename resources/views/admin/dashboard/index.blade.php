@@ -35,7 +35,7 @@
                                 <div class="card-box tilebox-one">
                                     <i class="icon-layers float-right text-muted"></i>
                                     <h6 class="text-muted text-uppercase m-b-20"> Total Drivers</h6>
-                                    <h2 class="m-b-20 dash-title" data-plugin="counterup">{{ $user_count }}</h2>
+                                    <h2 class="m-b-20 dash-title" data-plugin="counterup">{{ count($users_trees) }}</h2>
 
                                 </div>
                             </div>
@@ -48,7 +48,40 @@
                                 </div>
                             </div>
                         </div>
-                        
+						
+						@php $users_trees_arr = buildTree($drivers); @endphp
+						
+						<div class="row">
+                            <div class="col-md-12">
+                                <div class="card-box tilebox-one">
+                                     <h6 class="text-muted text-uppercase m-b-20"> {{ fullname($loginid) }} Trees (Admin)</h6>
+                                      @if($user_tree_count = count($users_trees) > 0)
+											@php $user_tree_chunks = array_chunk($users_trees,2);
+												$i=1; 
+											@endphp
+											@foreach($user_tree_chunks as $users)
+												<p>Tree {{ $i}}</p>
+												<div class="ja_tree_wrapper" >
+													<div class="row">
+														<div class="col-md-12">
+															<div class="user_tree">
+																<ul>
+																	@foreach($users as $user)
+																		@include('admin.tree.recursive',$user)
+																	@endforeach
+																</ul>
+															</div>
+														</div>
+													</div>
+												</div>
+												@php $i++; @endphp
+											@endforeach
+										@endif
+                                   
+                                </div>
+                            </div>
+                        </div>
+                        <!--
                         <div class="row">
                             <div class="col-md-6 ">
                                 <form >
@@ -66,7 +99,7 @@
                                 </form>
                             </div>
                         </div>
-
+					
                       @if($tree_user_id != null and !empty($tree_user_id) )
                       @php $users_trees = buildTree($drivers,$tree_user_id); @endphp
                       @if(!empty($users_trees))
@@ -74,38 +107,37 @@
                             <div class="col-md-12">
                                 <div class="card-box tilebox-one">
                                      <h6 class="text-muted text-uppercase m-b-20"> {{ fullname($tree_user_id) }} Trees</h6>
-                                      @if($user_tree_count = count($users_trees) > 0)
-                                      @php $user_tree_chunks = array_chunk($users_trees,2);
-                                           $i=1; 
-                                      @endphp
-                                      @foreach($user_tree_chunks as $users)
-                                      <p>Tree {{ $i}}</p>
-                                      <div class="ja_tree_wrapper" >
-                                       <div class="row">
-                                       <div class="col-md-12">
-                                        <div class="user_tree">
-                                            <ul>
-                                                @foreach($users as $user)
-                                                 @include('admin.tree.recursive',$user)
-                                                @endforeach
-                                            </ul>
-                                        </div>
-                                        </div>
-                                        </div>
-                                     </div>
-                                     @php $i++; @endphp
-                                     @endforeach
-                                     @endif
-                                   
-                                </div>
-                            </div>
-                        </div>
+										@if($user_tree_count = count($users_trees) > 0)
+											@php $user_tree_chunks = array_chunk($users_trees,2);
+												$i=1; 
+											@endphp
+											@foreach($user_tree_chunks as $users)
+												<p>Tree {{ $i}}</p>
+												<div class="ja_tree_wrapper" >
+													<div class="row">
+														<div class="col-md-12">
+															<div class="user_tree">
+																<ul>
+																	@foreach($users as $user)
+																		@include('admin.tree.recursive',$user)
+																	@endforeach
+																</ul>
+															</div>
+														</div>
+													</div>
+												</div>
+												@php $i++; @endphp
+											@endforeach
+										@endif
+									</div>
+								</div>
+							</div>
                       @else
                        <p>Tree not found</p>
                       @endif
 
                       @endif
-                 
+                 -->
                     <!-- end row -->
 
                     </div> <!-- container -->

@@ -1,0 +1,7 @@
+======================18-07-2018 by Sanjay========================================
+
+ALTER TABLE `users` CHANGE `active` `active` ENUM('0','1','2') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '0' 
+
+ALTER TABLE `tree` ADD `status` ENUM('0','1','2') NOT NULL COMMENT '2 = delete' AFTER `level`
+
+CREATE TABLE `carz_driver`.`level_settings` ( `level_id` INT(11) NOT NULL AUTO_INCREMENT , `level_number` INT(11) NOT NULL , `status` ENUM('0','1','2') NOT NULL COMMENT '0 = inactive, 1= Active, 2 = delete' , `created_at` DATETIME NOT NULL , `updated_at` DATETIME NOT NULL , PRIMARY KEY (`level_id`)) ENGINE = MyISAM 

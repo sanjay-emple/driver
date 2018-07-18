@@ -13,6 +13,7 @@
                                     <li><a href="{{ route('admin.user.index') }}">Driver List</a></li>
                                     <li><a href="{{ route('admin.invite.index') }}">Invite</a></li>
                                     <li><a href="{{ route('admin.user.changepassword.form') }}">Change Password</a></li>
+									<li><a href="{{ route('admin.user.lavelSettings.form') }}">Level Settings</a></li>
                                 </ul>
                             </li>
                             @else

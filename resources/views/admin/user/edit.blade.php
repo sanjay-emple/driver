@@ -19,7 +19,7 @@
                         </div>
                         <!-- end row -->
                         @include('partials.flash')
-
+						
                         <form method="post" action="{{ route('admin.user.store') }}" enctype="multipart/form-data">
                            {{ csrf_field() }}
                            

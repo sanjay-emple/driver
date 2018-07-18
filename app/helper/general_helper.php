@@ -135,6 +135,25 @@ function test(array $elements, $parentId = 0) {
     return $branch;
 }
 
+/*
+	FunctionBy:		Sanjay Yadav
+	Description:	Get user name by user_id
+	Date:			18.07.2018
+*/
+function getFullNameById($user_id)
+{
+    $obj = \App\User::where('id',$user_id)->first();
+	
+    if($obj)
+    {
+        return ucfirst($obj->first_name .' '.$obj->last_name);
+    }
+    else
+    {
+        return 'User not found';
+    }
+}
+
 
 
 ?>

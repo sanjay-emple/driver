@@ -103,6 +103,11 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 	Route::get('/users', 'UserController@index')->name('admin.user.index');
 	Route::get('/user/{id}/activate', 'UserController@activate_user')->name('admin.user.activate');
+	//Route::post('/delete-driver', 'UserController@deleteDriver')->name('admin.user.deleteDriver');
+	Route::post('delete-driver',array(
+			'as'=>'deleteDriver',
+			'uses'=>'UserController@deleteDriver'
+	));
 	Route::get('/ajax/getuser', 'UserController@ajax_get_users')->name('ajax.get.users');
 
 	Route::get('/invite', 'InviteController@index')->name('admin.invite.index');
@@ -113,6 +118,9 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 	Route::get('/changepassword', 'UserController@change_password_form')->name('admin.user.changepassword.form');
 	Route::post('/changepassword', 'UserController@change_password')->name('admin.user.changepassword');
+
+	Route::get('/lavelSettings', 'UserController@setDriverlevel_form')->name('admin.user.lavelSettings.form');
+	Route::post('/lavelSettings', 'UserController@updateDriverlevel')->name('admin.user.lavelSettings');
 
 	Route::get('/changeplace', 'UserController@change_position_form')->name('admin.change.position.form');
 	Route::post('/changeplace', 'UserController@change_position_store')->name('admin.change.position.store');

@@ -25,8 +25,7 @@ class InviteController extends Controller
     	
     	$data = array();
     	$obj_user = auth()->user();
-
-    	if($res->has('user_csv'))
+		if($res->has('user_csv'))
     	{
 	    	$path = $res->file('user_csv');
 	    	$data = array_filter(array_map('str_getcsv', file($path)));

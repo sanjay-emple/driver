@@ -1,5 +1,6 @@
 @extends('layouts.admin.app')
 @section('content')
+
  <div class="content-page">
                 <!-- Start content -->
                 <div class="content">
@@ -96,7 +97,57 @@ $('#datatable').DataTable({
               }
        }
     });
-
+	/*
+		FunctionBy:		Sanay
+	*/
+	function deleteDriver(id,name)
+	{
+		if (id == '0') {
+			swal({
+				  title: "Alert!",
+				  text: "Entry can not be deleted Because, Child driver is exist!",
+				  icon: "error",
+				  button: "Ok!",
+				});
+                return false;
+		}
+		else
+		{
+			swal({
+				title: "Are you sure to delete," +name+ " ?",
+				//text: "Once deleted, you will not be able to recover this imaginary file!",
+				icon: "warning",
+				buttons: true,
+				dangerMode: true,
+			})
+			.then((willDelete) => {
+				if (willDelete) {
+					$.ajax({
+						type: "POST",
+						url: '{{ URL::route('deleteDriver') }}',
+						data: {
+							"_token": "{{ csrf_token() }}",
+							"id": id
+						},
+						success: function (data) {
+							
+							if(data == 1){
+								location.reload();
+							}else{
+								alert('Something went wrong');
+							}
+						
+						}
+					});
+				
+				} else {
+					return false;
+				}
+			});
+		}
+		
+		
+	}
 </script>
 
 @endsection

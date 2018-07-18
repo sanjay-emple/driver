@@ -75,7 +75,7 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-
+		
         $ramdom_string = random_string(8);
         $driver_num = random_num(8);
 
@@ -110,7 +110,7 @@ class RegisterController extends Controller
             else
             {
                 $tree_m = Tree::where('parent_id',$ref_user->id)->orderBy('id','desc')->first();
-
+				
                 if($tree_m == null)
                 {
                    $pos = 1;
@@ -147,9 +147,9 @@ class RegisterController extends Controller
         $this->guard()->logout();
 
         return redirect(route('thankyou'));
-        // $url = route('register').'?ref='.$request->ref_code;
-        // return redirect($url)
-        //     ->withSuccess('Your request is send to admin for approval.');
+			$url = route('register').'?ref='.$request->ref_code;
+				return redirect($url)
+				->withSuccess('Your request is send to admin for approval.');
     }
 
     public function showRegistrationForm(Request $res)

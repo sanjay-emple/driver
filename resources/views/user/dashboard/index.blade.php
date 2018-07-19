@@ -67,7 +67,8 @@
                                            $i=1; 
                                       @endphp
                                       @foreach($user_tree_chunks as $users)
-                                      <p>Tree {{ $i}}</p>
+									  @if($levels >= $i)
+									  <p>Tree {{ $i}}</p>
                                       <div class="ja_tree_wrapper" >
                                        <div class="row">
                                        <div class="col-md-12">
@@ -82,6 +83,7 @@
                                         </div>
                                      </div>
                                       @php $i++; @endphp
+									  @endif
                                       @endforeach
                                       @endif
                                    

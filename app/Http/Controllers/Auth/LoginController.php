@@ -57,7 +57,7 @@ class LoginController extends Controller
             ],
 
             'password' => 'required|string',
-            'g-recaptcha-response' => 'required|captcha',
+            //'g-recaptcha-response' => 'required|captcha',
         ], $this->validationErrors());
     }
 

@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\User;
 use App\Tree;
-
+use DB; 
 class HomeController extends Controller
 {
     /**
@@ -46,8 +46,11 @@ class HomeController extends Controller
         $data['users_arr']= User::where('id','<>',1)->get()->toArray();
         $data['tree_user_id']= $tree_user_id;
        
+		$levels = DB::table('level_settings')->first(['level_number']);
+		
+        $data['levels'] = $levels->level_number;
 
-       // dd($data['users']);
+       //dd($data['levels']);
 
         //dd($trees);
 
